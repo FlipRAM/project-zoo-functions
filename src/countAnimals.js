@@ -2,16 +2,23 @@ const data = require('../data/zoo_data');
 
 function countAnimals(animal) {
   // seu código aqui
-  const createName = (element) => element.name;
-  const count = (element) => element.residents.length;
-  const obj = data.species.map(createName);
-  const cont = data.species.map(count);
-  const putTogether = (element, index) => element.name 
-  const objFinal = obj.map(putTogether)
-  console.log(obj);
-  console.log(cont);
+  const listOfAnimals = data.species.map(
+    (element) => element.name,
+  );
+  const animalCount = data.species.map(
+    (element) => element.residents.length,
+  );
+  const animalObj = {};
+  for (let index = 0; index < listOfAnimals.length; index += 1) {
+    animalObj[listOfAnimals[index]] = animalCount[index];
+  }
+  console.log(listOfAnimals);
+  console.log(animalCount);
+  console.log(animalObj);
+  console.log(animal);
+  return animalObj;
 }
 
-console.log(countAnimals());
+console.log(countAnimals('lions'));
 
 module.exports = countAnimals;
