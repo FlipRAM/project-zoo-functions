@@ -2,23 +2,25 @@ const data = require('../data/zoo_data');
 
 function countAnimals(animal) {
   // seu código aqui
-  const listOfAnimals = data.species.map(
-    (element) => element.name,
-  );
-  const animalCount = data.species.map(
-    (element) => element.residents.length,
-  );
-  const animalObj = {};
-  for (let index = 0; index < listOfAnimals.length; index += 1) {
-    animalObj[listOfAnimals[index]] = animalCount[index];
+  if (typeof animal === 'undefined') {
+    const everyAnimal = {};
+    data.species.forEach((element) => {
+      everyAnimal[element.name] = element.residents.length;
+    });
+    return everyAnimal;
+  } if (!animal.sex) {
+    const animalMatch = data.species.filter((element) => element.name === animal.specie);
+    const count = animalMatch[0].residents.length;
+    return count;
   }
-  console.log(listOfAnimals);
-  console.log(animalCount);
-  console.log(animalObj);
-  console.log(animal);
-  return animalObj;
+  const animalToCheck = data.species.filter((element) => element.name === animal.specie);
+  const population = animalToCheck[0].residents;
+  const numberOfSex = population.filter((element) => element.sex === animal.sex);
+  console.log(numberOfSex);
+  const count = numberOfSex.length;
+  return count;
 }
 
-console.log(countAnimals('lions'));
+console.log(countAnimals({ specie: 'elephants', sex: 'male' }));
 
 module.exports = countAnimals;
